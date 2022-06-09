@@ -28,9 +28,11 @@ type DataChangeRecord struct {
 	NumberOfRecordsInTransaction    int64  `spanner:"number_of_records_in_transaction"`
 	NumberOfPartitionsInTransaction int64  `spanner:"number_of_partitions_in_transaction"`
 }
+
 type HeartbeatRecord struct {
 	Timestamp time.Time `spanner:"timestamp"`
 }
+
 type ChildPartitionsRecord struct {
 	RecordSequence  string    `spanner:"record_sequence"`
 	StartTimestamp  time.Time `spanner:"start_timestamp"`
@@ -39,6 +41,7 @@ type ChildPartitionsRecord struct {
 		ParentPartitionTokens []string `spanner:"parent_partition_tokens"`
 	} `spanner:"child_partitions"`
 }
+
 type ChangeStreamRecord struct {
 	DataChangeRecord      []*DataChangeRecord      `spanner:"data_change_record" json:",omitempty"`
 	HeartbeatRecord       []*HeartbeatRecord       `spanner:"heartbeat_record" json:",omitempty"`
