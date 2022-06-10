@@ -66,7 +66,7 @@ SELECT ChangeRecord
 		if err != nil {
 			return err
 		}
-		err = enc.Encode(records)
+		err = enc.Encode(map[string]interface{}{"PartitionToken": partition, "ChangeRecord": records})
 		if err != nil {
 			return err
 		}
@@ -77,7 +77,7 @@ SELECT ChangeRecord
 					childPartitionToken := childPartition.Token
 					childStartTimestamp := childPartitionsRecord.StartTimestamp
 					errgrp.Go(func() error {
-						return WatchPartitions(ctx, errgrp, client, changeStream, &childPartitionToken, childStartTimestamp, endTimestamp)
+						return WatchPartitions(ctx, errgrp, client, changeStream, &childPartitionToken, time.Time(childStartTimestamp), endTimestamp)
 					})
 				}
 			}
